@@ -1,0 +1,448 @@
+{
+  "name": "arducode",
+  "displayName": "Arducode",
+  "publisher": "oignontom8283",
+  "author": "oignontom8283",
+  "license": "MIT",
+  "version": "0.4.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Oignontom8283/arducode.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Oignontom8283/arducode/issues"
+  },
+  "homepage": "https://github.com/Oignontom8283/arducode#readme",
+  "description": "%description%",
+  "private": true,
+  "icon": "media/icon.png",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Other"
+  ],
+  "keywords": [
+    "arduino",
+    "arduino-cli",
+    "c++",
+    "embedded",
+    "serial monitor",
+    "esp32",
+    "intellisense"
+  ],
+  "main": "./dist/extension.js",
+  "extensionDependencies": [
+    "ms-vscode.cpptools"
+  ],
+  "extensionKind": [
+    "workspace"
+  ],
+  "activationEvents": [
+    "workspaceContains:**/*.ino",
+    "onLanguage:cpp"
+  ],
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": false,
+      "description": "%untrusted%"
+    },
+    "virtualWorkspaces": false
+  },
+  "contributes": {
+    "languages": [
+      {
+        "id": "cpp",
+        "extensions": [
+          ".ino",
+          ".pde"
+        ]
+      }
+    ],
+    "commands": [
+      {
+        "command": "arducode.verify",
+        "title": "%cmd.verify%",
+        "category": "Arducode",
+        "icon": "$(check)"
+      },
+      {
+        "command": "arducode.upload",
+        "title": "%cmd.upload%",
+        "category": "Arducode",
+        "icon": "$(arrow-right)"
+      },
+      {
+        "command": "arducode.selectPort",
+        "title": "%cmd.selectPort%",
+        "category": "Arducode",
+        "icon": "$(plug)"
+      },
+      {
+        "command": "arducode.selectBoard",
+        "title": "%cmd.selectBoard%",
+        "category": "Arducode",
+        "icon": "$(circuit-board)"
+      },
+      {
+        "command": "arducode.boardOptions",
+        "title": "%cmd.boardOptions%",
+        "category": "Arducode"
+      },
+      {
+        "command": "arducode.openMonitor",
+        "title": "%cmd.openMonitor%",
+        "category": "Arducode",
+        "icon": "$(pulse)"
+      },
+      {
+        "command": "arducode.manageLibraries",
+        "title": "%cmd.manageLibraries%",
+        "category": "Arducode",
+        "icon": "$(library)"
+      },
+      {
+        "command": "arducode.manageCores",
+        "title": "%cmd.manageCores%",
+        "category": "Arducode"
+      },
+      {
+        "command": "arducode.installZip",
+        "title": "%cmd.installZip%",
+        "category": "Arducode",
+        "icon": "$(file-zip)"
+      },
+      {
+        "command": "arducode.installGit",
+        "title": "%cmd.installGit%",
+        "category": "Arducode",
+        "icon": "$(repo-clone)"
+      },
+      {
+        "command": "arducode.openExample",
+        "title": "%cmd.openExample%",
+        "category": "Arducode"
+      },
+      {
+        "command": "arducode.newSketch",
+        "title": "%cmd.newSketch%",
+        "category": "Arducode"
+      },
+      {
+        "command": "arducode.selectSketch",
+        "title": "%cmd.selectSketch%",
+        "category": "Arducode"
+      },
+      {
+        "command": "arducode.exportBinary",
+        "title": "%cmd.exportBinary%",
+        "category": "Arducode"
+      },
+      {
+        "command": "arducode.refreshIntelliSense",
+        "title": "%cmd.refreshIntelliSense%",
+        "category": "Arducode"
+      },
+      {
+        "command": "arducode.openSettings",
+        "title": "%cmd.openSettings%",
+        "category": "Arducode"
+      },
+      {
+        "command": "arducode.refreshLists",
+        "title": "%cmd.refreshLists%",
+        "category": "Arducode",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "arducode.openReference",
+        "title": "%cmd.openReference%",
+        "category": "Arducode"
+      }
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "command": "arducode.selectPort",
+          "group": "navigation@0",
+          "when": "arducode.active && resourceExtname =~ /^\\.(ino|pde|cpp|c|h|hpp)$/ && config.arducode.editorButtons"
+        },
+        {
+          "command": "arducode.verify",
+          "group": "navigation@1",
+          "when": "arducode.active && resourceExtname =~ /^\\.(ino|pde|cpp|c|h|hpp)$/ && config.arducode.editorButtons"
+        },
+        {
+          "command": "arducode.upload",
+          "group": "navigation@2",
+          "when": "arducode.active && resourceExtname =~ /^\\.(ino|pde|cpp|c|h|hpp)$/ && config.arducode.editorButtons"
+        },
+        {
+          "command": "arducode.openMonitor",
+          "group": "navigation@3",
+          "when": "arducode.active && resourceExtname =~ /^\\.(ino|pde|cpp|c|h|hpp)$/ && config.arducode.editorButtons"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "arducode.installZip",
+          "when": "view == arducode.libs",
+          "group": "navigation@1"
+        },
+        {
+          "command": "arducode.installGit",
+          "when": "view == arducode.libs",
+          "group": "navigation@2"
+        },
+        {
+          "command": "arducode.refreshLists",
+          "when": "view =~ /^arducode\\.(libs|cores)$/",
+          "group": "navigation@3"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "arducode.openReference",
+          "group": "navigation@9",
+          "when": "arducode.active && editorLangId == cpp"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "arducode.verify",
+        "key": "alt+shift+v",
+        "when": "arducode.active && editorTextFocus && editorLangId == cpp"
+      },
+      {
+        "command": "arducode.upload",
+        "key": "alt+shift+u",
+        "when": "arducode.active && editorTextFocus && editorLangId == cpp"
+      },
+      {
+        "command": "arducode.openMonitor",
+        "key": "alt+shift+m",
+        "when": "arducode.active"
+      },
+      {
+        "command": "arducode.openReference",
+        "key": "ctrl+shift+f1",
+        "when": "editorTextFocus && arducode.active"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "arducode",
+          "title": "Arducode",
+          "icon": "media/chip.svg"
+        }
+      ],
+      "panel": [
+        {
+          "id": "arducodeMonitor",
+          "title": "%view.monitor%",
+          "icon": "media/chip.svg"
+        }
+      ]
+    },
+    "views": {
+      "arducode": [
+        {
+          "id": "arducode.sketchActions",
+          "name": "%view.sketchActions%",
+          "initialSize": 26
+        },
+        {
+          "id": "arducode.libs",
+          "name": "%view.libs%",
+          "type": "webview",
+          "initialSize": 70,
+          "visibility": "visible"
+        },
+        {
+          "id": "arducode.cores",
+          "name": "%view.cores%",
+          "type": "webview",
+          "initialSize": 4,
+          "visibility": "collapsed"
+        }
+      ],
+      "arducodeMonitor": [
+        {
+          "id": "arducode.monitor",
+          "name": "%view.monitor%",
+          "type": "webview"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Arducode",
+      "properties": {
+        "arducode.board": {
+          "type": "string",
+          "default": "",
+          "scope": "resource",
+          "markdownDescription": "%cfg.board%"
+        },
+        "arducode.port": {
+          "type": "string",
+          "default": "",
+          "scope": "resource",
+          "description": "%cfg.port%"
+        },
+        "arducode.sketch": {
+          "type": "string",
+          "default": "",
+          "scope": "resource",
+          "description": "%cfg.sketch%"
+        },
+        "arducode.libraryPaths": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [
+            "./lib"
+          ],
+          "scope": "resource",
+          "markdownDescription": "%cfg.libraryPaths%"
+        },
+        "arducode.useGlobalLibraries": {
+          "type": "boolean",
+          "default": true,
+          "scope": "resource",
+          "description": "%cfg.useGlobalLibraries%"
+        },
+        "arducode.warnings": {
+          "type": "string",
+          "enum": [
+            "none",
+            "default",
+            "more",
+            "all"
+          ],
+          "default": "default",
+          "scope": "resource",
+          "description": "%cfg.warnings%"
+        },
+        "arducode.buildProperties": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "scope": "resource",
+          "markdownDescription": "%cfg.buildProperties%"
+        },
+        "arducode.programmer": {
+          "type": "string",
+          "default": "",
+          "scope": "resource",
+          "description": "%cfg.programmer%"
+        },
+        "arducode.verifyAfterUpload": {
+          "type": "boolean",
+          "default": false,
+          "scope": "resource",
+          "description": "%cfg.verifyAfterUpload%"
+        },
+        "arducode.verbose": {
+          "type": "boolean",
+          "default": false,
+          "scope": "resource",
+          "description": "%cfg.verbose%"
+        },
+        "arducode.baudRate": {
+          "type": "number",
+          "default": 9600,
+          "scope": "resource",
+          "description": "%cfg.baudRate%"
+        },
+        "arducode.monitorConfig": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "scope": "resource",
+          "markdownDescription": "%cfg.monitorConfig%"
+        },
+        "arducode.additionalBoardUrls": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "scope": "resource",
+          "description": "%cfg.additionalBoardUrls%"
+        },
+        "arducode.cliPath": {
+          "type": "string",
+          "default": "",
+          "scope": "machine-overridable",
+          "description": "%cfg.cliPath%"
+        },
+        "arducode.docs": {
+          "type": "string",
+          "enum": [
+            "full",
+            "short",
+            "off"
+          ],
+          "enumDescriptions": [
+            "%docs.full%",
+            "%docs.short%",
+            "%docs.off%"
+          ],
+          "default": "full",
+          "scope": "resource",
+          "description": "%cfg.docs%"
+        },
+        "arducode.editorButtons": {
+          "type": "boolean",
+          "default": true,
+          "scope": "resource",
+          "description": "%cfg.editorButtons%"
+        },
+        "arducode.configureProject": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "default": null,
+          "scope": "resource",
+          "description": "%cfg.configureProject%"
+        },
+        "arducode.themeColors": {
+          "type": "boolean",
+          "default": true,
+          "scope": "resource",
+          "description": "%cfg.themeColors%"
+        }
+      }
+    },
+    "viewsWelcome": [
+      {
+        "view": "arducode.sketchActions",
+        "contents": "%welcome%"
+      }
+    ]
+  },
+  "scripts": {
+    "build": "esbuild src/extension.ts --bundle --outfile=dist/extension.js --external:vscode --platform=node --target=node18",
+    "check": "tsc --noEmit",
+    "test": "node test/l10n.js",
+    "package": "npm run check && npm run build && vsce package --no-dependencies -o arducode.vsix"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.43",
+    "@types/vscode": "1.90",
+    "@vscode/vsce": "^4.1.1",
+    "esbuild": "^0.28.2",
+    "typescript": "^5.9.3",
+    "vscode-cpptools": "^7.1.1"
+  },
+  "l10n": "./l10n"
+}
