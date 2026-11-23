@@ -440,7 +440,7 @@
     "build": "esbuild src/extension.ts --bundle --outfile=dist/extension.js --external:vscode --platform=node --target=node18",
     "check": "tsc --noEmit",
     "test": "node test/l10n.js",
-    "package": "npm run check && npm run build && vsce package --no-dependencies -o arducode.vsix"
+    "package": "npm run check && npm run build && vsce package --no-dependencies -o dist/arducode.vsix"
   },
   "devDependencies": {
     "@types/node": "^20.19.43",
