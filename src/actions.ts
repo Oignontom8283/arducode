@@ -29,6 +29,7 @@ export class Actions implements vscode.TreeDataProvider<Action> {
     return [
       { label: tr("Verify"), icon: 'check', command: 'verify', description: path.basename(s), tooltip: tr("Compile the sketch") },
       { label: tr("Upload"), icon: 'arrow-right', command: 'upload', tooltip: tr("Compile and send to the board") },
+      { label: tr("Build binaries"), icon: 'package', command: 'exportBinary', tooltip: tr("Compile to .elf and .hex files without uploading") },
       { label: tr("Port"), icon: 'plug', command: 'selectPort', description: port || tr("not set") },
       { label: tr("Board"), icon: 'circuit-board', command: 'selectBoard', description: board ? board.split(':').slice(2).join(':') : tr("not set"), tooltip: board },
       { label: tr("Board options"), icon: 'settings', command: 'boardOptions' },

@@ -15,6 +15,9 @@ exports.run = async () => {
     const done = await api.installLibrary('LiquidCrystal', '1.0.7', path.join(ws, 'lib'));
     log('install LiquidCrystal', fs.existsSync(path.join(ws, 'lib/LiquidCrystal/src/LiquidCrystal.h')), done);
     log('vérifier', await vscode.commands.executeCommand('arducode.verify') === true, diags(doc.uri));
+    await vscode.commands.executeCommand('arducode.exportBinary');
+    const built = fs.existsSync(path.join(ws, 'build')) ? fs.readdirSync(path.join(ws, 'build'), { recursive: true }).map(String) : [];
+    log('binaires .elf et .hex', built.some(f => /\.elf$/.test(f)) && built.some(f => /\.hex$/.test(f)), built);
     log('settings', true, fs.readFileSync(path.join(ws, '.vscode/settings.json'), 'utf8'));
     const set = JSON.parse(fs.readFileSync(path.join(ws, '.vscode/settings.json'), 'utf8'));
     log('boutons C++ masqués', set['C_Cpp.debugShortcut'] === false && vscode.workspace.getConfiguration('C_Cpp', doc.uri).get('debugShortcut') === false, set);

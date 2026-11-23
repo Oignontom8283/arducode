@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.5.0
+
+- **Build binaries** (Sketch section of the side bar, or Command palette): compiles the sketch to `.elf` and `.hex` files without uploading, then shows where they are. Handy for simulators such as Proteus.
+- New setting `arducode.exportDir` to choose the folder that receives those files.
+
 ## 0.4.0
 
 - English interface, with French translation following the VS Code language.

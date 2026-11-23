@@ -4,7 +4,7 @@
   "publisher": "oignontom8283",
   "author": "oignontom8283",
   "license": "MIT",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/Oignontom8283/arducode.git"
@@ -341,6 +341,12 @@
           "default": "",
           "scope": "resource",
           "description": "%cfg.programmer%"
+        },
+        "arducode.exportDir": {
+          "type": "string",
+          "default": "",
+          "scope": "resource",
+          "markdownDescription": "%cfg.exportDir%"
         },
         "arducode.verifyAfterUpload": {
           "type": "boolean",

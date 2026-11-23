@@ -60,7 +60,8 @@ async function doBuild(mode: Mode): Promise<boolean> {
 
   const args = ['compile', '-b', board, '--warnings', config.get<string>('warnings', sketch), ...compileFlags(sketch)];
   if (config.get('verbose', sketch)) { args.push('-v'); }
-  if (mode === 'export') { args.push('--export-binaries'); }
+  const outDir = mode === 'export' ? exportDir(sketch) : undefined;
+  if (mode === 'export') { args.push(...(outDir ? ['--output-dir', outDir] : ['--export-binaries'])); }
   if (mode === 'upload') {
     args.push('--upload');
     if (port) { args.push('-p', port); }
@@ -88,12 +89,42 @@ async function doBuild(mode: Mode): Promise<boolean> {
     if (r.code === 0) {
       cli.output.appendLine(tr("\n✔ {0}: done in {1} s.", title, secs));
       vscode.window.setStatusBarMessage(tr("$(check) {0}: done", title), 5000);
+      if (mode === 'export') { void announceExport(outDir ?? path.join(sketch, 'build'), t0); }
       return true;
     }
     cli.output.appendLine(tr("\n✖ {0}: failed ({1} s).", title, secs));
     void explain(all, board, sketch, title);
     return false;
   } finally { resume?.(); }
+}
+
+/** Dossier choisi par arducode.exportDir, ou undefined : arduino-cli exporte alors dans <croquis>/build/<carte>. */
+function exportDir(sketch: string): string | undefined {
+  const dir = config.get<string>('exportDir', sketch);
+  return dir?.trim() ? config.expandPath(dir, config.baseDir(sketch)) : undefined;
+}
+
+/** Fichiers produits depuis `since`, le .elf en premier. */
+async function exportedFiles(dir: string, since: number): Promise<string[]> {
+  const found: string[] = [];
+  const walk = async (d: string, depth: number) => {
+    for (const e of await fs.promises.readdir(d, { withFileTypes: true }).catch(() => [])) {
+      const p = path.join(d, e.name);
+      if (e.isDirectory()) { if (depth < 2) { await walk(p, depth + 1); } }
+      else if (/\.(elf|hex|bin|eep|map)$/i.test(e.name) && (await fs.promises.stat(p)).mtimeMs >= since - 1000) { found.push(p); }
+    }
+  };
+  await walk(dir, 0);
+  return found.sort((a, b) => Number(/\.elf$/i.test(b)) - Number(/\.elf$/i.test(a)) || (a < b ? -1 : 1));
+}
+
+async function announceExport(dir: string, since: number) {
+  const files = await exportedFiles(dir, since);
+  if (!files.length) { return; }
+  cli.output.appendLine([tr("Exported files:"), ...files.map(f => '  ' + f)].join('\n'));
+  if (await vscode.window.showInformationMessage(tr("Binaries exported to {0}", path.dirname(files[0])), tr("Show in folder"))) {
+    await vscode.commands.executeCommand('revealFileInOS', vscode.Uri.file(files[0]));
+  }
 }
 
 async function explain(text: string, board: string, sketch: string, title: string) {

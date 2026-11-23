@@ -27,7 +27,8 @@ Ouvrez le **dossier** d'un croquis, ou un dossier qui en contient. Le fichier pr
 | Vérifier, Téléverser, Port, Carte, Moniteur | barre latérale Arducode, haut de l'éditeur, barre d'état |
 | Vérifier / Téléverser / Moniteur | `Alt+Maj+V` / `Alt+Maj+U` / `Alt+Maj+M` |
 | Bibliothèques et cartes | barre latérale Arducode |
-| Options de carte, exemples, export `.hex`, nouveau croquis | palette de commandes → « Arducode » |
+| Compiler les `.elf` / `.hex` sans téléverser | barre latérale Arducode → *Compiler les binaires* (dossier : `arducode.exportDir`) |
+| Options de carte, exemples, nouveau croquis | palette de commandes → « Arducode » |
 | Référence Arduino | survol d'un mot, ou `Ctrl+Maj+F1` |
 
 La première fois, Arducode demande votre accord avant d'écrire dans le `.vscode/settings.json` du projet.
